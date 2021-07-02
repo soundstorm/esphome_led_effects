@@ -1,0 +1,11 @@
+- addressable_lambda:
+    name: "Fire"
+    update_interval: 50ms
+    lambda: |-
+      for (uint16_t i = 0; i < it.size(); i++) { #uint8_t may be enough, if using < 256, but doesn't matter memorywise
+        float brightness = (it.size()/2 - abs(it.size()/2 - i)) / (float)(it.size()/2); #center effect, fade out to the edges
+        uint8_t whiteness = random(64 * brightness); #add some white, centered
+        uint8_t redness = random(64) + random(127 * brightness); #make red
+        uint8_t greeness = random(redness/2); #add some green to give it a yellow tint
+        it[i] = ESPColor(whiteness + redness, whiteness + greeness, whiteness);
+      }
