@@ -1,4 +1,4 @@
-# esphome_led_effects
+# ESPhome LED Effects Selection
 Effects Selection for ESPhome addressable Lights like WS2812 with lambdas
 
 
