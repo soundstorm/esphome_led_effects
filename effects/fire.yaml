@@ -1,3 +1,5 @@
+# Simple Fire effect with random flickering of red to yellow pixels and white-ish accents
+# Fading out to the LED stripe ends for more realistic effect
 - addressable_lambda:
     name: "Fire"
     update_interval: 50ms
