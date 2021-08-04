@@ -1,0 +1,55 @@
+# Adapted from https://github.com/esphome/feature-requests/issues/265#issuecomment-532933883
+addressable_lambda:
+  name: "Flames"
+  update_interval: 18ms
+  lambda: |-
+    int Cooling  = 55;
+    int Sparking = 110;
+    // Use byte* instead of byte[] to allow dynamic allocation based on number of pixels
+    static byte *heat = (byte*) calloc(it.size(), sizeof(byte));
+    int cooldown;
+
+    // Step 1.  Cool down every cell a little
+    for (uint16_t i = 0; i < it.size(); i++) {
+      cooldown = random(0, ((Cooling * 10) / it.size()) + 2);
+
+      if (cooldown > heat[i]) {
+        heat[i] = 0;
+      } else {
+        heat[i] = heat[i] - cooldown;
+      }
+    }
+
+    // Step 2.  Heat from each cell drifts 'up' and diffuses a little
+    for (uint16_t k = it.size() - 1; k >= 2; k--) {
+      heat[k] = (heat[k - 1] + heat[k - 2] + heat[k - 2]) / 3;
+    }
+
+    // Step 3.  Randomly ignite new 'sparks' near the bottom
+    if (random(255) < Sparking ) {
+      int y = random(7);
+      heat[y] = heat[y] + random(160, 255);
+    }
+
+    // Step 4.  Convert heat to LED colors
+    for (uint16_t Pixel = 0; Pixel < it.size(); Pixel++) {
+      // Scale 'heat' down from 0-255 to 0-191
+      byte t192 = round((heat[Pixel] / 255.0) * 191);
+
+      // calculate ramp up from
+      byte heatramp = t192 & 0x3F; // 0..63
+      heatramp <<= 2; // scale up to 0..252
+
+      // figure out which third of the spectrum we're in:
+      //this is where you can reverse the effect by switching the commented out lines in all 3 places.
+      if( t192 > 0x80) {                     // hottest
+        //it[it.size() - Pixel - 1] = ESPColor(255, 255, heatramp);
+        it[Pixel] = ESPColor(255, 255, heatramp);
+      } else if( t192 > 0x40 ) {             // middle
+        //it[it.size() - Pixel - 1] = ESPColor(255, heatramp, 0);
+        it[Pixel] = ESPColor(255, heatramp, 0);
+      } else {                               // coolest
+        //it[it.size() - Pixel - 1] = ESPColor(heatramp, 0, 0);
+        it[Pixel] = ESPColor(heatramp, 0, 0);
+      }
+    }
