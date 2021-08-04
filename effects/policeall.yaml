@@ -4,7 +4,7 @@ addressable_lambda:
   update_interval: 50ms
   lambda: |-
     static uint16_t pos = 0;
-    const uint8_t     b = 255; //brightness of effect
+    uint8_t b = max(max(current_color.r, current_color.g), current_color.b); //get brightness (ignoring w)
     if (pos < it.size() / 2) {
       it.range(pos, pos + it.size() / 2) = Color(b, 0, 0);       //fill red
       it.range(0, pos) = Color(0, 0, b);                         //fill blue
