@@ -4,15 +4,14 @@ addressable_lambda:
   update_interval: 50ms
   lambda: |-
     static uint16_t pos = 0;
-    uint8_t b = max(max(current_color.r, current_color.g), current_color.b); //get brightness (ignoring w)
     if (pos < it.size() / 2) {
-      it.range(pos, pos + it.size() / 2) = Color(b, 0, 0);       //fill red
-      it.range(0, pos) = Color(0, 0, b);                         //fill blue
-      it.range(pos + it.size() / 2, it.size()) = Color(0, 0, b); //fill blue
+      it.range(pos, pos + it.size() / 2) = Color(255, 0, 0);       //fill red
+      it.range(0, pos) = Color(0, 0, 255);                         //fill blue
+      it.range(pos + it.size() / 2, it.size()) = Color(0, 0, 255); //fill blue
     } else {
-      it.range(pos - it.size() / 2, pos) = Color(0, 0, b);       //fill blue
-      it.range(0, pos - it.size() / 2) = Color(b, 0, 0);         //fill red
-      it.range(pos, it.size()) = Color(b, 0, 0);                 //fill red
+      it.range(pos - it.size() / 2, pos) = Color(0, 0, 255);       //fill blue
+      it.range(0, pos - it.size() / 2) = Color(255, 0, 0);         //fill red
+      it.range(pos, it.size()) = Color(255, 0, 0);                 //fill red
     }
     pos++;
     if (pos >= it.size()) pos = 0; //rollover
