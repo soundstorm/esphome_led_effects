@@ -1,10 +1,13 @@
 # Adapted from https://github.com/esphome/feature-requests/issues/265#issuecomment-532933883
+# Vertical Flames
 addressable_lambda:
-  name: "Flames"
+  name: "Flames Vertical"
   update_interval: 18ms
   lambda: |-
-    int Cooling  = 55;
-    int Sparking = 110;
+    // You may adjust the following two variables as well as the update_interval to fit your needs
+    const uint8_t Cooling  = 55;
+    const uint8_t Sparking = 110;
+    
     // Use byte* instead of byte[] to allow dynamic allocation based on number of pixels
     static byte *heat = (byte*) calloc(it.size(), sizeof(byte));
     int cooldown;
@@ -26,8 +29,8 @@ addressable_lambda:
     }
 
     // Step 3.  Randomly ignite new 'sparks' near the bottom
-    if (random(255) < Sparking ) {
-      int y = random(7);
+    if (random(255) < Sparking) {
+      int y = random(min(it.size() / 10, 7));
       heat[y] = heat[y] + random(160, 255);
     }
 
@@ -42,10 +45,10 @@ addressable_lambda:
 
       // figure out which third of the spectrum we're in:
       //this is where you can reverse the effect by switching the commented out lines in all 3 places.
-      if( t192 > 0x80) {                     // hottest
+      if (t192 > 0x80) {                     // hottest
         //it[it.size() - Pixel - 1] = ESPColor(255, 255, heatramp);
         it[Pixel] = ESPColor(255, 255, heatramp);
-      } else if( t192 > 0x40 ) {             // middle
+      } else if (t192 > 0x40 ) {             // middle
         //it[it.size() - Pixel - 1] = ESPColor(255, heatramp, 0);
         it[Pixel] = ESPColor(255, heatramp, 0);
       } else {                               // coolest
