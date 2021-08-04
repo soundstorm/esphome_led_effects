@@ -1,4 +1,4 @@
-# Lightning Effect based on WLED effect
+# Lightning Effect based on WLED effect, adjustable color and brightness
 addressable_lambda:
   name: "Lightning"
   update_interval: 24ms
@@ -6,19 +6,20 @@ addressable_lambda:
     static uint16_t next_frame = 0;
     static uint16_t frame = 0;
     static uint8_t flashes = 0;
-    uint16_t segment[] = {0,0};
-    segment[0] = random(it.size());
-    segment[1] = 1 + random(it.size() - segment[0]);
+    uint16_t px_start = 0;
+    uint16_t px_end   = 0;
+    px_start = random(it.size());
+    px_end = px_start + 1 + random(it.size() - px_start);
     if (!frame) { // first frame
       flashes = 4 + random(5);
       next_frame = flashes * 2 + 5 + random(255);
       it.all() = COLOR_BLACK;
     }
     if (frame == 0) { // first frame less intensity
-      it.range(segment[0], segment[1] + segment[0]) = Color(63, 63, 63);
+      it.range(px_start, px_end) = current_color * 63;
     } else if (frame > 3 && !(frame & 1) && flashes) {
-      uint8_t bri = 255/(1 + random(2));
-      it.range(segment[0], segment[1] + segment[0]) = Color(bri, bri, bri);
+      uint8_t bri = 255 / (1 + random(2));
+      it.range(px_start, px_end) = current_color * bri;
       flashes--;
     } else {
       it.all() = COLOR_BLACK;
