@@ -1,0 +1,9 @@
+addressable_lambda:
+  name: "Christmas RedGreen"
+  lambda: |-
+    for (int i = 1; i <  it.size(); i+=2) {
+    it[i] = light::ESPColor(255, 0, 0);
+    }
+    for (int i = 0; i <  it.size(); i+=2) {
+    it[i] = light::ESPColor(0, 255, 0);
+    }
