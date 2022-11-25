@@ -1,0 +1,42 @@
+addressable_lambda:
+  name: "Bluez"
+  lambda: |-
+    for (int i = 0; i <  it.size(); i+=10) {
+    it[i] = light::ESPColor(255, 255, 255);
+    }
+
+    for (int i = 1; i <  it.size(); i+=10) {
+    it[i] = light::ESPColor(255, 255, 255);
+    }
+
+    for (int i = 2; i <  it.size(); i+=10) {
+    it[i] = light::ESPColor(238, 0, 255);
+    }
+
+    for (int i = 3; i <  it.size(); i+=10) {
+    it[i] = light::ESPColor(238, 0, 255);
+    }
+
+    for (int i = 4; i <  it.size(); i+=10) {
+    it[i] = light::ESPColor(255, 157, 0);
+    }
+
+    for (int i = 5; i <  it.size(); i+=10) {
+    it[i] = light::ESPColor(255, 157, 0);
+    }
+
+    for (int i = 6; i <  it.size(); i+=10) {
+    it[i] = light::ESPColor(0, 28, 209);
+    }
+
+    for (int i = 7; i <  it.size(); i+=10) {
+    it[i] = light::ESPColor(0, 28, 209);
+    }
+
+    for (int i = 8; i <  it.size(); i+=10) {
+    it[i] = light::ESPColor(183, 255, 0);
+    }
+
+    for (int i = 9; i <  it.size(); i+=10) {
+    it[i] = light::ESPColor(183, 255, 0);
+    }

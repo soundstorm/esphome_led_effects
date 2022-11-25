@@ -1,0 +1,29 @@
+addressable_lambda:
+  name: Vesuvius
+  update_interval: 50ms
+  lambda:
+  
+    esphome::Color colors[] = { ESPColor(255,0,0), 
+                          ESPColor(0,255,0), 
+                          ESPColor(255,255,0),  
+                          ESPColor(0,0,255),  
+                          ESPColor(255,0,255),  
+                          ESPColor(0,255,255),  
+                          ESPColor(255,255,255),  
+                          ESPColor(0,0,0),  
+                          };
+                          
+    static int color = 0;
+    static int step = 0;
+    const int color_size = 8;
+
+    it[it.size()/2 - step] = colors[color];
+    it[it.size()/2 + step] = colors[color];
+
+    step += 1;
+    if (step >= it.size()/2){
+      step = 0;
+      color += 1;
+      if (color >= color_size) 
+          color = 0;
+    }

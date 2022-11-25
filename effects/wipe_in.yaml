@@ -1,0 +1,13 @@
+addressable_lambda:
+  name: "Wipe In"
+  update_interval: 20ms
+  lambda: |-
+    static int x = 0;
+    if (initial_run) {
+      x = 0;
+      it.all() = ESPColor(0,0,0);
+    }
+    if (x < it.size()) {
+      it[x] = current_color;
+      x += 1;
+    }
