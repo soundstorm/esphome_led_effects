@@ -13,7 +13,7 @@ addressable_lambda:
     if (!frame) { // first frame
       flashes = 4 + random(5);
       next_frame = flashes * 2 + 5 + random(255);
-      it.all() = COLOR_BLACK;
+      it.all() = esphome::Color::BLACK;
     }
     if (frame == 0) { // first frame less intensity
       it.range(px_start, px_end) = current_color * 63;
@@ -22,7 +22,7 @@ addressable_lambda:
       it.range(px_start, px_end) = current_color * bri;
       flashes--;
     } else {
-      it.all() = COLOR_BLACK;
+      it.all() = esphome::Color::BLACK;
     }
     frame++;
     if (frame >= next_frame) frame = 0; // Reset frames

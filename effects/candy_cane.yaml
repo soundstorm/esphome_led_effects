@@ -10,9 +10,9 @@ addressable_lambda:
     }
 
     if(state < width/2){
-      it[0] = ESPColor(255,0,0);
+      it[0] = esphome::Color(255,0,0);
     } else {
-      it[0] = ESPColor::WHITE;
+      it[0] = esphome::Color::WHITE;
     }
 
     state += 1;
